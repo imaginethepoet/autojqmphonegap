@@ -1,0 +1,10 @@
+{
+  "name": "autojqm-bower",
+  "version": "0.0.0",
+  "directory": "packages",
+  "dependencies": {
+    "jquery": "~1.10.2",
+    "jquery-mobile": "~1.4.0-rc.1",
+    "backbone": "~1.1"
+  }
+}
