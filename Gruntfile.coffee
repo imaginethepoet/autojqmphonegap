@@ -1,6 +1,5 @@
 module.exports = (grunt) ->
   grunt.initConfig
-
    pkg: grunt.file.readJSON('package.json'),
 
    bower:
@@ -32,14 +31,14 @@ module.exports = (grunt) ->
   # phonegap project creation commands part 1
       createphonegapproject:
         command:['sudo npm install -g phonegap',
-          'phonegap create demoapp'
+          'phonegap create <%= pkg.name %>'
           'echo phonegap project built'                
         ].join('&&')
 
 
   # phonegap project creation commands part 2
       createiosbuild:
-        command:['cd demoapp',
+        command:['cd <%= pkg.name %>',
           'phonegap run ios'
           'echo creating the IOS package'                
         ].join('&&')
@@ -91,7 +90,7 @@ module.exports = (grunt) ->
         flatten: false 
         cwd: "assets"      
         src: "**"
-        dest: "demoapp/www/"
+        dest: "<%= pkg.name %>/www/"
 
 
       phonegapindexcopy:
@@ -99,7 +98,7 @@ module.exports = (grunt) ->
         flatten: false 
         cwd: ""      
         src: "index.html"
-        dest: "demoapp/www/"
+        dest: "<%= pkg.name %>/www/"
 
 
     # run a minification process on the jquery file
@@ -147,18 +146,20 @@ module.exports = (grunt) ->
 
   # lets watch all the stuff going on for live changes.
      watch:
+        ###options: {
+          atBegin: true
+        },###
         less:
           files: ["resources/custom/less/**/*.less"] 
-          tasks: ["less"]
+          tasks: ["less", 'move-assets', 'move-index-asset', 'build-ios-project']
 
         coffee:
           files: ["resources/custom/coffee/**/*.coffee"]
-          tasks: ["coffee"]
+          tasks: ["coffee", 'move-assets', 'move-index-asset', 'build-ios-project']
 
         bake:
           files: ["resources/custom/components/**"]
           tasks: ['bake', 'move-assets', 'move-index-asset', 'build-ios-project']
-
 
 
   grunt.loadNpmTasks "grunt-shell"
@@ -209,10 +210,10 @@ module.exports = (grunt) ->
 
 
   grunt.registerTask('build-ios-project', ['shell:createiosbuild']);
-
+  grunt.registerTask('build', ['move-assets', 'less', 'coffee', 'bake', 'build-ios-project'])
 
 
 # Tak setups and runs the install grunt command for JQM package, setups all the assets, and then fires the watch command start coding.
-  grunt.registerTask('setup-jqm', ['get-jqm', 'setup-jquery', 'setup-jqm-node', 'build-jqm',  'build-jqm-css', 'build-jqm-js', 'build-backbone-js','rename-jqm-css', 'rename-jqm-js', 'create-phonegap', 'move-assets', 'build-ios-project' ,'default']);
-
-  grunt.registerTask('default', ['connect', 'watch']);
+  grunt.registerTask('setup-jqm', ['get-jqm', 'setup-jquery', 'setup-jqm-node', 'build-jqm',  'build-jqm-css', 'build-jqm-js', 'build-backbone-js','rename-jqm-css', 'rename-jqm-js', 'create-phonegap', 'build']);
+        #TODO move assets, build phonegap, etc.
+  grunt.registerTask('default', ['connect', 'build', 'watch']);
