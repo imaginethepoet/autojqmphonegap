@@ -214,6 +214,6 @@ module.exports = (grunt) ->
 
 
 # Tak setups and runs the install grunt command for JQM package, setups all the assets, and then fires the watch command start coding.
-  grunt.registerTask('setup-jqm', ['get-jqm', 'setup-jquery', 'setup-jqm-node', 'build-jqm',  'build-jqm-css', 'build-jqm-js', 'build-backbone-js','rename-jqm-css', 'rename-jqm-js', 'create-phonegap', 'build']);
+  grunt.registerTask('setup-jqm', ['get-jqm', 'setup-jquery', 'setup-jqm-node', 'build-jqm',  'build-jqm-css', 'build-jqm-js', 'build-backbone-js','rename-jqm-css', 'rename-jqm-js', 'move-assets', 'move-index-asset', 'create-phonegap', 'build']);
         #TODO move assets, build phonegap, etc.
   grunt.registerTask('default', ['connect', 'build', 'watch']);
