@@ -31,7 +31,7 @@ module.exports = (grunt) ->
   # phonegap project creation commands part 1
       createphonegapproject:
         command:['sudo npm install -g phonegap',
-          'phonegap create <%= pkg.name %>'
+          'phonegap create <%= pkg.name %> <%= pkg.packageName %> <%= pkg.name %>'
           'echo phonegap project built'                
         ].join('&&')
 

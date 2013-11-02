@@ -1,5 +1,6 @@
 {
   "name": "JQMAUTOV1",
+  "packageName": "com.csd",
   "version": "1.1.0",
   "description": "A quick rapid mobile app framework  and build script",
   "author": "Preston McCauley",
